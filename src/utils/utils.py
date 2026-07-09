@@ -2,7 +2,7 @@ import time
 import warnings
 from importlib.util import find_spec
 from pathlib import Path
-from typing import Callable, List
+from typing import Callable
 from functools import wraps
 import os
 import torch
@@ -157,9 +157,9 @@ def save_file(path: str, content: str) -> None:
         file.write(content)
 
 
-def instantiate_callbacks(callbacks_cfg: DictConfig, logger=None) -> List[Callback]:
+def instantiate_callbacks(callbacks_cfg: DictConfig, logger=None) -> list[Callback]:
     """Instantiates callbacks from config."""
-    callbacks: List[Callback] = []
+    callbacks: list[Callback] = []
 
     if not callbacks_cfg:
         log.warning("Callbacks config is empty.")
@@ -179,9 +179,9 @@ def instantiate_callbacks(callbacks_cfg: DictConfig, logger=None) -> List[Callba
 
 
 @rank_zero_only
-def instantiate_loggers(logger_cfg: DictConfig) -> List[Logger]:
+def instantiate_loggers(logger_cfg: DictConfig) -> list[Logger]:
     """Instantiates loggers from config."""
-    logger: List[Logger] = []
+    logger: list[Logger] = []
 
     if not logger_cfg:
         log.warning("Logger config is empty.")
@@ -341,24 +341,24 @@ def configure_cfg_from_checkpoint(cfg):
     ckpt_path = Path(cfg.ckpt_path)
     if ckpt_path.is_dir():
         cfg.ckpt_path, cfg.config_path = get_latest_checkpoint_and_config(ckpt_path)
-        print(f"Using latest checkpoint: {cfg.ckpt_path}")
-        print(f"Using config: {cfg.config_path}")
+        log.info(f"Using latest checkpoint: {cfg.ckpt_path}")
+        log.info(f"Using config: {cfg.config_path}")
 
     if cfg.get("config_path"):
         with open(cfg.get("config_path"), "r") as stream:
             config = yaml.safe_load(stream)
         unflatten_config = unflatten_wandb_config(config)
         # update net config with config from checkpoint
-        print("Updating model config.................")
+        log.info("Updating model config...")
         config = unflatten_config["model"]["net"]
         for k in cfg.model.net:
             if k in config and k not in ["_target_"]:
-                print(f"Overwriting {k}: {cfg.model.net[k]} with {config[k]} (type: {type(config[k])})")
+                log.info(f"Overwriting {k}: {cfg.model.net[k]} with {config[k]} (type: {type(config[k])})")
                 if config[k] == "None":
                     config[k] = None
                 cfg.model.net[k] = config[k]
         # update datamodule config with config from checkpoint
-        print("Updating datamodule config.............")
+        log.info("Updating datamodule config...")
         config = unflatten_config["datamodule"]
         for k in cfg.datamodule:
             if k in config and k not in [
@@ -371,7 +371,7 @@ def configure_cfg_from_checkpoint(cfg):
                 "num_frames",
                 "skip_short_videos_thresh",
             ]:
-                print(f"Overwriting {k}: {cfg.datamodule[k]} with {config[k]}")
+                log.info(f"Overwriting {k}: {cfg.datamodule[k]} with {config[k]}")
                 if config[k] == "None":
                     config[k] = None
                 cfg.datamodule[k] = config[k]
@@ -453,8 +453,7 @@ def save_audio_video(
                 os.remove("temp_audio.wav")
         return 1
     except Exception as e:
-        print(e)
-        print("Saving video to file failed")
+        log.error(f"Saving video to file failed: {e}")
         return 0
 
 
@@ -464,7 +463,7 @@ def ask_until_response(question, expected=[]):
         if answer in expected:
             return answer
         else:
-            print(f"Answer must be in {expected}!")
+            log.warning(f"Answer must be in {expected}!")
 
 
 # do same einops operations on a list of tensors

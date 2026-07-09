@@ -100,8 +100,8 @@ def train(cfg: DictConfig) -> tuple[dict, dict]:
         lr_finder = trainer.tuner.lr_find(model, datamodule=datamodule)
         fig = lr_finder.plot(suggest=True)
         fig.show()
-        print("lr_finder resuls: ", lr_finder.results)
-        print("lr finder suggestion: ", lr_finder.suggestion())
+        log.info(f"lr_finder results: {lr_finder.results}")
+        log.info(f"lr_finder suggestion: {lr_finder.suggestion()}")
         exit()
 
     if cfg.get("train"):

@@ -4,8 +4,6 @@ This module provides a LightningDataModule for the MNIST dataset,
 suitable for quick testing and as a template for custom datasets.
 """
 
-from typing import Optional
-
 import torch
 from pytorch_lightning import LightningDataModule
 from torch.utils.data import DataLoader, random_split
@@ -46,16 +44,16 @@ class MNISTDataModule(LightningDataModule):
             transforms.Normalize((0.1307,), (0.3081,)),
         ])
 
-        self.data_train: Optional[torch.utils.data.Dataset] = None
-        self.data_val: Optional[torch.utils.data.Dataset] = None
-        self.data_test: Optional[torch.utils.data.Dataset] = None
+        self.data_train: torch.utils.data.Dataset | None = None
+        self.data_val: torch.utils.data.Dataset | None = None
+        self.data_test: torch.utils.data.Dataset | None = None
 
     def prepare_data(self):
         """Download data if needed."""
         MNIST(self.hparams.data_dir, train=True, download=True)
         MNIST(self.hparams.data_dir, train=False, download=True)
 
-    def setup(self, stage: Optional[str] = None):
+    def setup(self, stage: str | None = None):
         """Load and split the dataset."""
         if stage == "fit" or stage is None:
             mnist_full = MNIST(
@@ -106,6 +104,6 @@ class MNISTDataModule(LightningDataModule):
             shuffle=False,
         )
 
-    def teardown(self, stage: Optional[str] = None):
+    def teardown(self, stage: str | None = None):
         """Clean up after fit or test."""
         pass

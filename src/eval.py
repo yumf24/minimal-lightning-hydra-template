@@ -36,8 +36,6 @@ if os.getenv("DATA_ROOT") is None:
 # https://github.com/ashleve/pyrootutils
 # ------------------------------------------------------------------------------------ #
 
-from typing import List, Tuple
-
 import hydra
 from omegaconf import DictConfig
 from pytorch_lightning import LightningDataModule, LightningModule, Trainer
@@ -51,7 +49,7 @@ log = utils.get_pylogger(__name__)
 
 
 @utils.task_wrapper
-def evaluate(cfg: DictConfig) -> Tuple[dict, dict]:
+def evaluate(cfg: DictConfig) -> tuple[dict, dict]:
     """Evaluates given checkpoint on a datamodule testset.
 
     This method is wrapped in optional @task_wrapper decorator which applies extra utilities
@@ -75,7 +73,7 @@ def evaluate(cfg: DictConfig) -> Tuple[dict, dict]:
     model: LightningModule = hydra.utils.instantiate(cfg.model)
 
     log.info("Instantiating loggers...")
-    logger: List[Logger] = utils.instantiate_loggers(cfg.get("logger"))
+    logger: list[Logger] = utils.instantiate_loggers(cfg.get("logger"))
 
     save_summary(model, cfg.paths.output_dir, logger)
 

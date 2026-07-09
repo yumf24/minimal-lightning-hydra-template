@@ -5,7 +5,6 @@ strategies, commonly used in deep learning training pipelines.
 """
 
 import math
-from typing import List
 
 import torch
 from torch.optim import Optimizer
@@ -46,7 +45,7 @@ class WarmupCosineScheduler(LRScheduler):
         self.eta_min = eta_min
         super().__init__(optimizer, last_epoch)
 
-    def get_lr(self) -> List[float]:
+    def get_lr(self) -> list[float]:
         """Compute learning rate for current step."""
         if self.last_epoch < self.warmup_steps:
             # Linear warmup: lr = base_lr * (step / warmup_steps)
@@ -87,7 +86,7 @@ class WarmupLinearScheduler(LRScheduler):
         self.eta_min = eta_min
         super().__init__(optimizer, last_epoch)
 
-    def get_lr(self) -> List[float]:
+    def get_lr(self) -> list[float]:
         """Compute learning rate for current step."""
         if self.last_epoch < self.warmup_steps:
             # Linear warmup
@@ -121,7 +120,7 @@ class WarmupConstantScheduler(LRScheduler):
         self.warmup_steps = warmup_steps
         super().__init__(optimizer, last_epoch)
 
-    def get_lr(self) -> List[float]:
+    def get_lr(self) -> list[float]:
         """Compute learning rate for current step."""
         if self.last_epoch < self.warmup_steps:
             # Linear warmup

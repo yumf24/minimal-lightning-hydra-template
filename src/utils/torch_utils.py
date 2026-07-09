@@ -1,6 +1,5 @@
 import torch
 from src.utils import pylogger
-from typing import Tuple
 
 log = pylogger.get_pylogger(__name__)
 
@@ -10,7 +9,7 @@ def load_checkpoint(
     checkpoint_path,
     allow_extra_keys=False,
     extra_key="state_dict",
-    replace: Tuple = None,
+    replace: tuple | None = None,
     map_location="cpu",
 ):
     """Loads checkpoint into model with optional replacement of keys."""

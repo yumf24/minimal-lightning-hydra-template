@@ -1,5 +1,3 @@
-from typing import Tuple, Optional, Callable
-
 import torch
 from torch.optim.optimizer import Optimizer
 
@@ -36,7 +34,7 @@ class Lion(Optimizer):
         self,
         params,
         lr: float = 1e-4,
-        betas: Tuple[float, float] = (0.9, 0.99),
+        betas: tuple[float, float] = (0.9, 0.99),
         weight_decay: float = 0.0,
         use_triton: bool = False,
     ):
@@ -55,7 +53,7 @@ class Lion(Optimizer):
             self.update_fn = triton_update_fn
 
     @torch.no_grad()
-    def step(self, closure: Optional[Callable] = None):
+    def step(self, closure: Callable | None = None):
 
         loss = None
         if exists(closure):

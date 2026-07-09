@@ -1,5 +1,3 @@
-from typing import Optional
-
 from pytorch_lightning import LightningDataModule
 from torch.utils.data import DataLoader, Dataset
 
@@ -56,11 +54,11 @@ class RotationDataModule(LightningDataModule):
         # also ensures init params will be stored in ckpt
         self.save_hyperparameters(logger=False)
 
-        self.data_train: Optional[Dataset] = None
-        self.data_val: Optional[Dataset] = None
-        self.data_test: Optional[Dataset] = None
+        self.data_train: Dataset | None = None
+        self.data_val: Dataset | None = None
+        self.data_test: Dataset | None = None
 
-    def setup(self, stage: Optional[str] = None):
+    def setup(self, stage: str | None = None):
         """Load data. Set variables: `self.data_train`, `self.data_val`, `self.data_test`.
 
         This method is called by lightning with both `trainer.fit()` and `trainer.test()`, so be
@@ -134,7 +132,6 @@ if __name__ == "__main__":
     root = pyrootutils.setup_root(__file__, pythonpath=True)
     cfg = omegaconf.OmegaConf.load(root / "configs" / "datamodule" / "rotation_datamodule.yaml")
     # cfg.data_dir = str(root / "data")
-    print(cfg)
     data = hydra.utils.instantiate(cfg)
     data.prepare_data()
     data.setup()
