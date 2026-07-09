@@ -4,6 +4,7 @@ This module provides LR schedulers that combine warmup with various annealing
 strategies, commonly used in deep learning training pipelines.
 """
 
+import math
 from typing import List
 
 import torch
@@ -55,8 +56,9 @@ class WarmupCosineScheduler(LRScheduler):
             ]
         # Cosine annealing after warmup
         progress = (self.last_epoch - self.warmup_steps) / (self.max_steps - self.warmup_steps)
+        cos_value = math.cos(progress * math.pi)
         return [
-            self.eta_min + (base_lr - self.eta_min) * (1 + torch.cos(torch.tensor(progress * torch.pi))) / 2
+            self.eta_min + (base_lr - self.eta_min) * (1 + cos_value) / 2
             for base_lr in self.base_lrs
         ]
 

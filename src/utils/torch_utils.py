@@ -19,7 +19,7 @@ def load_checkpoint(
 
     log.info(f"Loading checkpoint! <checkpoint={checkpoint_path}>")
 
-    state_dict = torch.load(checkpoint_path, map_location=map_location)
+    state_dict = torch.load(checkpoint_path, map_location=map_location, weights_only=True)
     if extra_key:
         state_dict = state_dict[extra_key]
 

@@ -4,10 +4,13 @@
 # This source code is licensed under the license found in the
 # LICENSE file in the root directory of this source tree.
 
+import logging
 from typing import TYPE_CHECKING, Any
 
 import torch
 import torch.optim
+
+logger = logging.getLogger(__name__)
 
 if TYPE_CHECKING:
     from torch.optim.optimizer import _params_t
@@ -65,7 +68,7 @@ class DAdaptAdam(torch.optim.Optimizer):
             raise ValueError("Invalid beta parameter at index 1: {}".format(betas[1]))
 
         if decouple:
-            print("Using decoupled weight decay")
+            logger.info("Using decoupled weight decay")
 
         defaults = dict(
             lr=lr,
@@ -166,7 +169,7 @@ class DAdaptAdam(torch.optim.Optimizer):
         d = max(d, min(d_hat, d * growth_rate))
 
         if log_every > 0 and k % log_every == 0:
-            print(
+            logger.info(
                 f"ng: {ngroups} lr: {lr} dlr: {dlr} d_hat: {d_hat}, d: {d}. sksq_weighted={sksq_weighted:1.1e} sk_l1={sk_l1:1.1e} gsq_weighted={gsq_weighted:1.1e}"
             )
 
