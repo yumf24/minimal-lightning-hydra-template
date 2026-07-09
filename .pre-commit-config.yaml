@@ -39,7 +39,7 @@ repos:
         args: [--py39-plus]
 
   # python docstring formatting
-  - repo: https://github.com/econchick/docformatter
+  - repo: https://github.com/PyCQA/docformatter
     rev: v1.7.5
     hooks:
       - id: docformatter

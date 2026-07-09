@@ -266,3 +266,8 @@ exec_time.log
 *.key
 secrets.yaml
 credentials.json
+# Serena memories (project-specific)
+.serena/
+
+# Test data
+test_data/
