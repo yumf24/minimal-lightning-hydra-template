@@ -1,0 +1,29 @@
+services:
+  train-cpu:
+    build:
+      context: .
+      target: production
+    volumes:
+      - ./data:/app/data
+      - ./logs:/app/logs
+      - ./configs:/app/configs
+    command: python src/train.py trainer=cpu
+
+  train-dev:
+    build:
+      context: .
+      target: development
+    volumes:
+      - ./src:/app/src
+      - ./data:/app/data
+      - ./logs:/app/logs
+      - ./configs:/app/configs
+    command: python src/train.py trainer=cpu
+
+  tensorboard:
+    image: tensorflow/tensorflow:latest
+    ports:
+      - "6006:6006"
+    volumes:
+      - ./logs:/logs
+    command: tensorboard --logdir=/logs --host=0.0.0.0

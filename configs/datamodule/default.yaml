@@ -1,0 +1,12 @@
+_target_: src.datamodules.template_datamodule.RotationDataModule
+
+file_list_train: data/train.txt
+file_list_val: data/val.txt
+file_list_test: null
+
+# For Dataloader
+batch_size: 32
+num_workers: 8
+pin_memory: True
+persistent_workers: True
+

@@ -1,0 +1,268 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# PyInstaller
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+
+# Translations
+*.mo
+*.pot
+
+# Django stuff
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+
+# Flask stuff
+instance/
+.webassets-cache
+
+# Scrapy stuff
+.scrapy
+
+# Sphinx documentation
+docs/_build/
+
+# PyBuilder
+target/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# IPython
+profile_default/
+ipython_config.py
+
+# pyenv
+.python-version
+
+# PEP 582
+__pypackages__/
+
+# Celery stuff
+celerybeat-schedule
+celerybeat.pid
+
+# SageMath parsed files
+*.sage.py
+
+# Environments
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+.env
+.env.local
+.env.*.local
+.autoenv
+
+# Spyder project settings
+.spyderproject
+.spyproject
+
+# Rope project settings
+.ropeproject
+
+# mkdocs documentation
+/site
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pyre type checker
+.pyre/
+
+# ruff
+.ruff_cache/
+
+# ============ IDE / Editors ============
+
+# VisualStudioCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.code-workspace
+
+# JetBrains
+.idea/
+*.iml
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# Vim
+*.swp
+*.swo
+*~
+
+# Emacs
+*~
+\#*\#
+/.emacs.desktop
+/.emacs.desktop.lock
+*.elc
+
+# ============ OS Files ============
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Linux
+*~
+
+# ============ Deep Learning / ML ============
+
+# PyTorch
+*.pt
+*.pth
+*.ckpt
+
+# TensorFlow
+*.h5
+*.pb
+*.tar
+*.tar.gz
+*.tgz
+
+# ONNX
+*.onnx
+
+# Safetensors
+*.safetensors
+
+# Pickle
+*.pkl
+*.pickle
+
+# NumPy
+*.npy
+*.npz
+
+# ============ Project Specific ============
+
+# Lightning-Hydra-Template
+configs/local/default.yaml
+configs/local/
+data/
+logs/
+outputs/
+multirun/
+
+# Hydra outputs
+hydra/
+
+# Checkpoints
+checkpoints/
+*.ckpt
+
+# Lightning logs
+lightning_logs/
+
+# ============ Experiment Tracking ============
+
+# WandB
+wandb/
+
+# Neptune
+.neptune/
+
+# MLflow
+mlruns/
+mlartifacts/
+
+# TensorBoard
+runs/
+tensorboard/
+
+# Comet
+.comet/
+
+# ============ Docker ============
+
+# Docker volumes (if mounted locally)
+.docker/
+
+# ============ Temporary Files ============
+
+# Temporary video/audio files (from utils.py)
+temp.mp4
+temp_video.mp4
+temp_audio.wav
+
+# Model summaries
+model_summary.txt
+
+# Execution time logs
+exec_time.log
+
+# ============ Secrets (NEVER COMMIT) ============
+
+# API keys
+*api_key*
+*secret*
+*credentials*
+*.pem
+*.key
+secrets.yaml
+credentials.json
