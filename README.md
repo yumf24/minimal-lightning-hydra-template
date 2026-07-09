@@ -5,6 +5,7 @@
 <a href="https://pytorch.org/get-started/locally/"><img alt="PyTorch" src="https://img.shields.io/badge/PyTorch-2.0+-ee4c2c?logo=pytorch&logoColor=white"></a>
 <a href="https://lightning.ai/"><img alt="Lightning" src="https://img.shields.io/badge/Lightning-2.0+-792ee5?logo=pytorchlightning&logoColor=white"></a>
 <a href="https://hydra.cc/"><img alt="Config: Hydra" src="https://img.shields.io/badge/Config-Hydra-1.3+-89b8cd"></a>
+<a href="https://www.python.org/"><img alt="Python" src="https://img.shields.io/badge/Python-3.9+-3776ab?logo=python&logoColor=white"></a>
 <a href="https://github.com/pre-commit/pre-commit"><img alt="Pre-commit" src="https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white"></a>
 
 </div>
@@ -16,12 +17,16 @@ A production-ready deep learning project template featuring:
 - **PyTorch Lightning 2.x** for structured training loops and distributed training
 - **Hydra** for hierarchical configuration management
 - **TorchMetrics** for standardized metric computation
+- **Python 3.9+ modern syntax** - native type hints, modern logging practices
+- **PyTorch 2.0+ security features** - safe checkpoint loading with weights_only
 - Custom optimizers (Lion, DAdaptAdam)
 - Warmup schedulers (Cosine, Linear, Constant)
 - Docker and docker-compose support
-- GitHub Actions CI/CD
+- GitHub Actions CI/CD with comprehensive pre-commit hooks
 
 ## Installation
+
+**Requirements**: Python 3.9 or higher (for modern type hint syntax)
 
 ### Using pip
 
@@ -128,8 +133,8 @@ pytest --cov=src --cov-report=html
 
 This template includes custom optimizer implementations:
 
-- **Lion** (`src/optimizers/lion.py`): Google's Lion optimizer
-- **DAdaptAdam** (`src/optimizers/dadapt_adam.py`): Learning rate free optimizer
+- **Lion** (`src/optimizers/lion.py`): Google's Lion optimizer with modern type hints
+- **DAdaptAdam** (`src/optimizers/dadapt_adam.py`): Learning rate free optimizer with proper logging
 
 ```bash
 python src/train.py model.optimizer._target_=src.optimizers.lion.Lion
@@ -137,12 +142,17 @@ python src/train.py model.optimizer._target_=src.optimizers.lion.Lion
 
 ## Warmup Schedulers
 
-Use warmup schedulers for stable training:
+Use warmup schedulers for stable training. All schedulers use math.pi for device-agnostic computation:
 
 ```bash
 python src/train.py model.scheduler._target_=src.schedulers.warmup.WarmupCosineScheduler \
     model.scheduler.warmup_steps=1000 model.scheduler.max_steps=10000
 ```
+
+Available schedulers:
+- `WarmupCosineScheduler`: Linear warmup + cosine annealing
+- `WarmupLinearScheduler`: Linear warmup + linear decay
+- `WarmupConstantScheduler`: Linear warmup + constant LR
 
 ## Distributed Training
 
@@ -167,6 +177,41 @@ python src/train.py logger=tensorboard
 
 # Multiple loggers
 python src/train.py logger=[wandb,tensorboard]
+```
+
+**Note**: All logging uses standard Python logging module (replaced print statements for better control).
+
+## Modern Features
+
+This template follows Python 3.9+ and PyTorch 2.0+ best practices:
+
+### Type Hints
+```python
+# Native type hints (no typing imports needed)
+def get_lr(self) -> list[float]:
+def setup(self, stage: str | None = None):
+callbacks: list[Callback] = []
+```
+
+### Security
+```python
+# Safe checkpoint loading (PyTorch 2.0+)
+state_dict = torch.load(checkpoint_path, weights_only=True)
+```
+
+### Logging
+```python
+# Standardized logging throughout codebase
+log.info(f"Instantiating model <{cfg.model._target_}>")
+log.warning("Best ckpt not found!")
+log.error(f"Failed to save video: {e}")
+```
+
+### Device-Agnostic Computation
+```python
+# Warmup schedulers use math.pi (no device mismatch)
+import math
+cos_value = math.cos(progress * math.pi)
 ```
 
 ## License
